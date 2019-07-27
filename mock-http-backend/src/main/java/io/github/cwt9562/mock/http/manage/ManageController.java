@@ -5,8 +5,11 @@ import java.util.UUID;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.github.cwt9562.mock.http.custom.CustomRule;
+import io.github.cwt9562.mock.http.custom.CustomRuleService;
 import io.github.cwt9562.mock.http.utils.Dates;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,12 +33,14 @@ public class ManageController {
     @GetMapping(value = "/custom-rules", produces = "application/json")
     public ResponseEntity<IPage<CustomRule>> list(@RequestParam(required = false, defaultValue = "1") Integer current,
                                                   @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                  @RequestParam(required = false) String method,
                                                   @RequestParam(required = false) String uri) {
         return ResponseEntity.ok(
             customRuleService.page(
                 new Page<>(current, size),
                 new QueryWrapper<CustomRule>()
-                    .like(uri != null, "req_uri", uri)
+                    .like(method != null, "REQ_METHOD", StringUtils.upperCase(method))
+                    .like(uri != null, "REQ_URI", StringUtils.lowerCase(method))
             )
         );
     }
@@ -52,6 +57,10 @@ public class ManageController {
         customRule.setId(UUID.randomUUID().toString().toLowerCase());
         customRule.setCreateAt(Dates.format(Dates.now()));
         customRule.setUpdateAt(Dates.format(Dates.now()));
+
+        customRule.setReqMethod(StringUtils.upperCase(customRule.getReqMethod()));
+        customRule.setReqUri(StringUtils.lowerCase(customRule.getReqUri()));
+
         customRuleService.save(customRule);
         return ResponseEntity.ok(customRule);
     }
@@ -59,14 +68,15 @@ public class ManageController {
     @PutMapping(value = "/custom-rules/{id}", produces = "application/json")
     public ResponseEntity<CustomRule> update(@PathVariable("id") String id,
                                              @RequestBody CustomRule customRule) {
-        CustomRule before = customRuleService.getById(id);
-        before.setReqUri(customRule.getReqUri());
-        before.setRespStatusCode(customRule.getRespStatusCode());
-        before.setRespContentType(customRule.getRespContentType());
-        before.setRespBody(customRule.getRespBody());
-        before.setUpdateAt(Dates.format(Dates.now()));
-        customRuleService.updateById(before);
-        return ResponseEntity.ok(before);
+        CustomRule existsInDb = customRuleService.getById(id);
+        existsInDb.setReqMethod(StringUtils.upperCase(customRule.getReqMethod()));
+        existsInDb.setReqUri(StringUtils.lowerCase(customRule.getReqUri()));
+        existsInDb.setRespStatusCode(customRule.getRespStatusCode());
+        existsInDb.setRespContentType(customRule.getRespContentType());
+        existsInDb.setRespBody(customRule.getRespBody());
+        existsInDb.setUpdateAt(Dates.format(Dates.now()));
+        customRuleService.updateById(existsInDb);
+        return ResponseEntity.ok(existsInDb);
     }
 
     @DeleteMapping(value = "/custom-rules/{id}", produces = "application/json")

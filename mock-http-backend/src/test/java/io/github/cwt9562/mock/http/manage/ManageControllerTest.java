@@ -5,6 +5,8 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.Gson;
 import io.github.cwt9562.mock.http.Application;
+import io.github.cwt9562.mock.http.custom.CustomRule;
+import io.github.cwt9562.mock.http.custom.CustomRuleMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,6 +75,7 @@ public class ManageControllerTest {
                 .content(
                     gson.toJson(
                         new CustomRule()
+                            .setReqMethod("POST")
                             .setReqUri("/test-create")
                             .setRespStatusCode(200)
                     )
@@ -95,6 +98,7 @@ public class ManageControllerTest {
                 .content(
                     gson.toJson(
                         new CustomRule()
+                            .setReqMethod("POST")
                             .setReqUri("/test-update-after")
                             .setRespStatusCode(300)
                     )

@@ -1,9 +1,10 @@
-INSERT INTO CUSTOM_RULE (id, req_uri, resp_status_code, resp_content_type, resp_body, create_at, update_at)
-VALUES ('05695c5a-0fb3-4297-92fc-c328d5ce85bc', '/sample-200', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
-INSERT INTO CUSTOM_RULE (id, req_uri, resp_status_code, resp_content_type, resp_body, create_at, update_at)
-VALUES ('957f9dc1-3dd2-4de4-a786-382626fb69ce', '/sample-400', 400, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
+INSERT INTO CUSTOM_RULE (ID, REQ_METHOD, REQ_URI, RESP_STATUS_CODE, RESP_CONTENT_TYPE, RESP_BODY, CREATE_AT, UPDATE_AT)
+VALUES ('05695c5a-0fb3-4297-92fc-c328d5ce85bc', 'GET', '/sample-200', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
+INSERT INTO CUSTOM_RULE (ID, REQ_METHOD, REQ_URI, RESP_STATUS_CODE, RESP_CONTENT_TYPE, RESP_BODY, CREATE_AT, UPDATE_AT)
+VALUES ('957f9dc1-3dd2-4de4-a786-382626fb69ce', 'POST', '/sample-400', 400, 'application/json', '{"x":"y"}', '2019-7-13 18:25:19',
+        '2019-7-13 18:25:19');
 
-INSERT INTO CUSTOM_RULE (id, req_uri, resp_status_code, resp_content_type, resp_body, create_at, update_at)
-VALUES ('0c9046c3-d8cc-4afb-9a12-0799ea413712', '/test-update', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
-INSERT INTO CUSTOM_RULE (id, req_uri, resp_status_code, resp_content_type, resp_body, create_at, update_at)
-VALUES ('889a90cd-5083-4e1a-ab81-cfe12160e574', '/test-delete', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
+INSERT INTO CUSTOM_RULE (ID, REQ_METHOD, REQ_URI, RESP_STATUS_CODE, RESP_CONTENT_TYPE, RESP_BODY, CREATE_AT, UPDATE_AT)
+VALUES ('0c9046c3-d8cc-4afb-9a12-0799ea413712', 'GET', '/test-update', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
+INSERT INTO CUSTOM_RULE (ID, REQ_METHOD, REQ_URI, RESP_STATUS_CODE, RESP_CONTENT_TYPE, RESP_BODY, CREATE_AT, UPDATE_AT)
+VALUES ('889a90cd-5083-4e1a-ab81-cfe12160e574', 'GET', '/test-delete', 200, NULL, NULL, '2019-7-13 18:25:19', '2019-7-13 18:25:19');
