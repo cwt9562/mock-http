@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class ManageController {
     @Autowired
     private CustomRuleService customRuleService;
 
-    @GetMapping("/custom-rules")
+    @GetMapping(value = "/custom-rules", produces = "application/json")
     public ResponseEntity<IPage<CustomRule>> list(@RequestParam(required = false, defaultValue = "1") Integer current,
                                                   @RequestParam(required = false, defaultValue = "10") Integer size,
                                                   @RequestParam(required = false) String uri) {
@@ -39,30 +40,38 @@ public class ManageController {
         );
     }
 
-    @PostMapping("/custom-rules")
-    public CustomRule create(@RequestBody CustomRule customRule) {
+    @GetMapping(value = "/custom-rules/{id}", produces = "application/json")
+    public ResponseEntity<CustomRule> get(@PathVariable("id") String id) {
+        return ResponseEntity.ok(
+            customRuleService.getById(id)
+        );
+    }
+
+    @PostMapping(value = "/custom-rules", produces = "application/json")
+    public ResponseEntity<CustomRule> create(@RequestBody CustomRule customRule) {
         customRule.setId(UUID.randomUUID().toString().toLowerCase());
         customRule.setCreateAt(Dates.format(Dates.now()));
         customRule.setUpdateAt(Dates.format(Dates.now()));
         customRuleService.save(customRule);
-        return customRule;
+        return ResponseEntity.ok(customRule);
     }
 
-    @PutMapping("/custom-rules")
-    public CustomRule update(@RequestBody CustomRule customRule) {
-        String id = customRule.getId();
+    @PutMapping(value = "/custom-rules/{id}", produces = "application/json")
+    public ResponseEntity<CustomRule> update(@PathVariable("id") String id,
+                                             @RequestBody CustomRule customRule) {
         CustomRule before = customRuleService.getById(id);
         before.setReqUri(customRule.getReqUri());
         before.setRespStatusCode(customRule.getRespStatusCode());
         before.setRespContentType(customRule.getRespContentType());
         before.setRespBody(customRule.getRespBody());
-        customRule.setUpdateAt(Dates.format(Dates.now()));
+        before.setUpdateAt(Dates.format(Dates.now()));
         customRuleService.updateById(before);
-        return before;
+        return ResponseEntity.ok(before);
     }
 
-    @DeleteMapping("/custom-rules")
-    public void delete(@RequestBody CustomRule customRule) {
-        customRuleService.removeById(customRule.getId());
+    @DeleteMapping(value = "/custom-rules/{id}", produces = "application/json")
+    public void delete(@PathVariable("id") String id) {
+        customRuleService.removeById(id);
     }
+
 }
