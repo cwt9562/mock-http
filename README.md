@@ -20,7 +20,9 @@ Host: <ip>:<port>
 Content-Type: application/json
 b:2
 
-{"c":"3"}
+{
+    "c": "3"
+}
 ```
 
 #### 响应HTTP报文
@@ -30,7 +32,18 @@ HTTP/1.1 200 OK
 Content-Type: text/html;charset=UTF-8
 Content-Length: 160
 
-{"uri":"/test/abc","params":{"a":"1"},"headers":{"b":"2","Content-Type":"application/json;charset\u003dUTF-8"},"body":"{\"c\":\"3\"}","timestamp":1564216653411}
+{
+    "uri": "/test/abc",
+    "params": {
+        "a": "1"
+    },
+    "headers": {
+        "b": "2",
+        "Content-Type": "application/json"
+    },
+    "body": "{\"c\":\"3\"}",
+    "timestamp": 1564216653411
+}
 ```
 
 #### 响应字段说明
