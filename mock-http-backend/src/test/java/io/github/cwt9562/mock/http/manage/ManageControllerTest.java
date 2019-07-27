@@ -93,7 +93,7 @@ public class ManageControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk());
         List<CustomRule> customRules = mapper.selectList(
             new QueryWrapper<CustomRule>()
-                .eq("req_uri", "/test-create")
+                .eq("req_uri", "/test-update")
         );
         Assert.isTrue(CollectionUtils.isEmpty(customRules));
     }
