@@ -2,6 +2,8 @@
 
 模拟HTTP接口的桩程序项目
 
+![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=cwt9562/mock-http)
+
 ## 主要功能
 
 1. 通过镜像接口，检视请求内容
