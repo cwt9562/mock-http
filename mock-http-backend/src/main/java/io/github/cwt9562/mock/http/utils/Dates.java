@@ -11,7 +11,7 @@ import java.util.Date;
  *     2. 日期转字符串 (format)
  *     3. 字符串转日期 (parse)
  * </pre>
- * @author cwentao@linewell.com
+ * @author cwentao
  * @date 2018/1/10
  */
 public final class Dates {
